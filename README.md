@@ -1,5 +1,9 @@
 # GameAP Daemon Flysystem
 
+[![Build Status](https://travis-ci.com/et-nik/flysystem-gameap.svg?branch=master)](https://travis-ci.com/et-nik/flysystem-gameap)
+[![Quality Score](https://img.shields.io/scrutinizer/g/et-nik/flysystem-gameap.svg?style=flat-square)](https://scrutinizer-ci.com/g/et-nik/flysystem-gameap)
+[![Coverage Status](https://scrutinizer-ci.com/g/et-nik/flysystem-gameap/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/et-nik/flysystem-gameap/code-structure)
+
 GameAP Daemon Files Adapter 
 
 ## Installation
