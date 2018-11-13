@@ -4,7 +4,8 @@
 [![Quality Score](https://img.shields.io/scrutinizer/g/et-nik/flysystem-gameap.svg?style=flat-square)](https://scrutinizer-ci.com/g/et-nik/flysystem-gameap)
 [![Coverage Status](https://scrutinizer-ci.com/g/et-nik/flysystem-gameap/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/et-nik/flysystem-gameap/code-structure)
 
-GameAP Daemon Files Adapter 
+GameAP Daemon Files Adapter.
+This adapter uses [gameap-daemon-client](https://github.com/et-nik/gameap-daemon-client) library.
 
 ## Installation
 
