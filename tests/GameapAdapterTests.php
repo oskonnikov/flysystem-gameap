@@ -251,14 +251,14 @@ class GameapAdapterTests extends TestCase
                 'size' => 0,
                 'mtime' => 1542013640,
                 'type' => 'dir',
-                'permission' => 0755,
+                'permissions' => 0755,
             ],
             [
                 'name' => 'file.txt',
                 'size' => 15654,
                 'mtime' => 1542013150,
                 'type' => 'file',
-                'permission' => 0644
+                'permissions' => 0644
             ]
         ]);
 

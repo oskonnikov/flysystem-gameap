@@ -225,7 +225,18 @@ class GameapAdapter extends GameapAbstractAdapter
     public function listContents($directory = '', $recursive = false)
     {
         $directory = $this->applyPathPrefix($directory);
-        $result = $this->getConnection()->directoryContents($directory);
+        $listing = $this->getConnection()->directoryContents($directory);
+
+        $result = [];
+        foreach ($listing as $object) {
+            $path = empty($directory) ? $object['name'] : $this->applyPathPrefix($object['name']);
+            $result[] = $this->normalizeListingObject($path, $object);
+
+            if ($recursive && isset($object['type']) && $object['type'] === 'dir') {
+                $result = array_merge($result, $this->listContents($path));
+            }
+        }
+
         return $result;
     }
 

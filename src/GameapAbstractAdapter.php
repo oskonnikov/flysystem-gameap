@@ -4,6 +4,7 @@ namespace Knik\Flysystem\Gameap;
 
 use League\Flysystem\Adapter\AbstractAdapter;
 use League\Flysystem\SafeStorage;
+use League\Flysystem\AdapterInterface;
 
 use Knik\Gameap\GdaemonFiles;
 
@@ -330,6 +331,32 @@ abstract class GameapAbstractAdapter extends AbstractAdapter
     {
         $this->setPathPrefix($root);
         return $this;
+    }
+
+    /**
+     * Normalize a listing response.
+     *
+     * @param string $path
+     * @param array  $object
+     *
+     * @return array
+     */
+    protected function normalizeListingObject($path, array $object)
+    {
+        $type = $object['type'];
+        $timestamp = $object['mtime'];
+
+        if ($type === 'dir') {
+            return compact('path', 'timestamp', 'type');
+        }
+
+        $visibility = $object['permissions'] & (0777 ^ $this->permPrivate)
+            ? AdapterInterface::VISIBILITY_PUBLIC
+            : AdapterInterface::VISIBILITY_PRIVATE;
+
+        $size = (int) $object['size'];
+
+        return compact('path', 'timestamp', 'type', 'visibility', 'size');
     }
 
     /**
