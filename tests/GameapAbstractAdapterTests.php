@@ -18,8 +18,10 @@ class GameapAbstractAdapterTests extends TestCase
             'port' => 31717,
             'username' => 'test',
             'password' => 'test',
-            'privateKey' => '/private_key',
-            'privateKeyPass' => '/private_key',
+            'serverCertificate' => '/server.crt',
+            'localCertificate' => '/client.crt',
+            'privateKey' => '/private.key',
+            'privateKeyPass' => 'pr1vate_Key_pa$$',
             'root' => __DIR__,
             'timeout' => 10,
         ]);
@@ -48,7 +50,9 @@ class GameapAbstractAdapterTests extends TestCase
             [$filesystem, $adapter, $mock, 'port', 31717, 'integer'],
             [$filesystem, $adapter, $mock, 'username', 'username', 'string'],
             [$filesystem, $adapter, $mock, 'password', 'pa$$w0rd', 'string'],
-            [$filesystem, $adapter, $mock, 'privateKey', '/private_key', 'string'],
+            [$filesystem, $adapter, $mock, 'serverCertificate', '/server.crt', 'string'],
+            [$filesystem, $adapter, $mock, 'localCertificate', '/client.crt', 'string'],
+            [$filesystem, $adapter, $mock, 'privateKey', '/private.key', 'string'],
             [$filesystem, $adapter, $mock, 'privateKeyPass', 'privateKeyPass', 'string'],
             [$filesystem, $adapter, $mock, 'timeout', 10, 'integer'],
         ];
@@ -114,7 +118,7 @@ class GameapAbstractAdapterTests extends TestCase
     {
         $mock = Mockery::mock('Knik\Gameap\GdaemonFiles')->makePartial();
         $adapter->setConnection($mock);
-        
+
         $this->assertEquals($mock, $adapter->getConnection());
     }
 

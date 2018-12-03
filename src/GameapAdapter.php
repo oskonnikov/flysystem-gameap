@@ -17,6 +17,8 @@ class GameapAdapter extends GameapAbstractAdapter
         'port',
         'username',
         'password',
+        'serverCertificate',
+        'localCertificate',
         'privateKey',
         'privateKeyPass',
         'timeout',

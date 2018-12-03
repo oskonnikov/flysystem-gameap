@@ -35,7 +35,20 @@ abstract class GameapAbstractAdapter extends AbstractAdapter
      */
     protected $safeStorage;
 
+    /**
+     * @var string
+     */
     protected $privateKey;
+
+    /**
+     * @var string
+     */
+    protected $serverCertificate;
+
+    /**
+     * @var string
+     */
+    protected $localCertificate;
 
     /**
      * @var int
@@ -48,6 +61,11 @@ abstract class GameapAbstractAdapter extends AbstractAdapter
     protected $permPrivate = 0700;
 
     /**
+     * @var array
+     */
+    protected $configurable = [];
+
+    /**
      * Connect to the server.
      */
     public function connect()
@@ -57,6 +75,8 @@ abstract class GameapAbstractAdapter extends AbstractAdapter
             'port' => $this->getPort(),
             'username' => $this->getUsername(),
             'password' => $this->getPassword(),
+            'localCertificate' => $this->getLocalCertificate(),
+            'serverCertificate' => $this->getServerCertificate(),
             'privateKey' => $this->getPrivateKey(),
             'privateKeyPass' => $this->getPrivateKeyPass(),
             'timeout' => $this->getTimeout(),
@@ -330,6 +350,42 @@ abstract class GameapAbstractAdapter extends AbstractAdapter
     public function setRoot($root)
     {
         $this->setPathPrefix($root);
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getLocalCertificate()
+    {
+        return $this->localCertificate;
+    }
+
+    /**
+     * @param $localCertificate
+     * @return $this
+     */
+    public function setLocalCertificate($localCertificate)
+    {
+        $this->localCertificate = $localCertificate;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getServerCertificate()
+    {
+        return $this->serverCertificate;
+    }
+
+    /**
+     * @param $serverCertificate
+     * @return $this
+     */
+    public function setServerCertificate($serverCertificate)
+    {
+        $this->serverCertificate = $serverCertificate;
         return $this;
     }
 
