@@ -166,6 +166,7 @@ class GameapAdapterTests extends TestCase
      * @param Mockery\MockInterface $mock
      *
      * @expectedException RuntimeException
+     * @throws \League\Flysystem\FileNotFoundException
      */
     public function testDeleteFail($filesystem, $adapter, $mock)
     {
@@ -265,6 +266,46 @@ class GameapAdapterTests extends TestCase
         $listing = $adapter->listContents('');
         $this->assertInternalType('array', $listing);
         $this->assertCount(2, $listing);
+    }
+
+    /**
+     * @dataProvider adapterProvider
+     *
+     * @param League\Flysystem\FilesystemInterface $filesystem
+     * @param Knik\Flysystem\Gameap\GameapAdapter $adapter
+     * @param Mockery\MockInterface $mock
+     */
+    public function testListContentsRecursive($filesystem, $adapter, $mock)
+    {
+        $mock->shouldReceive('exist')->andReturn(true);
+        $mock->shouldReceive('directoryContents')->andReturn([
+            [
+                'name' => 'directory',
+                'size' => 0,
+                'mtime' => 1542013640,
+                'type' => 'dir',
+                'permissions' => 0755,
+            ],
+            [
+                'name' => 'file.txt',
+                'size' => 15654,
+                'mtime' => 1542013150,
+                'type' => 'file',
+                'permissions' => 0644
+            ]
+        ], [
+            [
+                'name' => 'recursive_directory',
+                'size' => 0,
+                'mtime' => 1542016666,
+                'type' => 'dir',
+                'permissions' => 0755,
+            ],
+        ]);
+
+        $listing = $adapter->listContents('', true);
+        $this->assertInternalType('array', $listing);
+        $this->assertCount(3, $listing);
     }
 
     /**

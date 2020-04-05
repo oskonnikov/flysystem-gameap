@@ -1,5 +1,8 @@
 <?php
 
+use Knik\Flysystem\Gameap\GameapAbstractAdapter;
+use Knik\Gameap\GdaemonFiles;
+use League\Flysystem\SafeStorage;
 use PHPUnit\Framework\TestCase;
 use Knik\Flysystem\Gameap\GameapAdapter;
 use League\Flysystem\Filesystem;
@@ -38,6 +41,35 @@ class GameapAbstractAdapterTests extends TestCase
         return [
             [$filesystem, $adapter, $mock],
         ];
+    }
+
+    public function testAdapter()
+    {
+        $adapter = new GameapTestAdapter([
+            'host' => '127.0.0.1',
+            'port' => 31718,
+            'username' => 'knik',
+            'password' => 'pa$$w0rd',
+            'privateKey' => 'private_key',
+            'privateKeyPass' => 'pr1vate_keyPa$$',
+            'root' => '/home/gameap/',
+            'nonexist' => 'blabla',
+
+            // Invalid options
+            'permPublic' => 0600,
+            'permPrivate' => 0600,
+        ]);
+
+        $this->assertEquals('127.0.0.1', $adapter->host);
+        $this->assertEquals(31718, $adapter->port);
+        $this->assertEquals('knik', $adapter->getUsername());
+        $this->assertEquals('pa$$w0rd', $adapter->getPassword());
+        $this->assertEquals('private_key', $adapter->getPrivateKey());
+        $this->assertEquals('pr1vate_keyPa$$', $adapter->getPrivateKeyPass());
+        $this->assertEquals('/home/gameap/', $adapter->getRoot());
+
+        $this->assertEquals(0744, $adapter->permPublic);
+        $this->assertEquals(0700, $adapter->permPrivate);
     }
 
     public function setGetMethodProvider()
@@ -122,6 +154,18 @@ class GameapAbstractAdapterTests extends TestCase
         $this->assertEquals($mock, $adapter->getConnection());
     }
 
+    public function testGetConnectionFail()
+    {
+        /** @var GameapAbstractAdapter|Mockery\MockInterface $mock */
+        $mock = Mockery::mock(GameapAbstractAdapter::class)->makePartial();
+
+        $mock->shouldReceive('isConnected')->atLeast()->andReturn(false);
+        $mock->shouldReceive('disconnect')->atLeast()->andReturnNull();
+        $mock->shouldReceive('connect')->atLeast()->andReturnNull();
+
+        $this->assertEquals(null, $mock->getConnection());
+    }
+
     /**
      * @dataProvider adapterProvider
      *
@@ -142,12 +186,181 @@ class GameapAbstractAdapterTests extends TestCase
      * @param Knik\Flysystem\Gameap\GameapAdapter $adapter
      * @param Mockery\MockInterface $mock
      */
-//    public function testConnect($filesystem, $adapter, $mock)
-//    {
-//        $mock->shouldReceive('__construct')->andReturn(null);
-//        
-//        $result = $adapter->connect();
-//        $this->assertNull($result);
-//    }
+    public function testConnect($filesystem, $adapter, $mock)
+    {
+        $mock->shouldReceive('__construct')->andReturn(null);
+
+        $result = $adapter->connect();
+        $this->assertNull($result);
+    }
     
+}
+
+class GameapTestAdapter extends GameapAbstractAdapter
+{
+    /**
+     * @var GdaemonFiles
+     */
+    public $connection;
+
+    /**
+     * @var string
+     */
+    public $host;
+
+    /**
+     * @var int
+     */
+    public $port = 31717;
+
+    /**
+     * @var int
+     */
+    public $timeout = 10;
+
+    /**
+     * @var SafeStorage
+     */
+    public $safeStorage;
+
+    /**
+     * @var string
+     */
+    public $privateKey;
+
+    /**
+     * @var string
+     */
+    public $serverCertificate;
+
+    /**
+     * @var string
+     */
+    public $localCertificate;
+
+    /**
+     * @var int
+     */
+    public $permPublic = 0744;
+
+    /**
+     * @var int
+     */
+    public $permPrivate = 0700;
+
+    /**
+     * @var array
+     */
+    public $configurable = [
+        'host',
+        'port',
+        'username',
+        'password',
+        'serverCertificate',
+        'localCertificate',
+        'privateKey',
+        'privateKeyPass',
+        'timeout',
+        'root',
+    ];
+
+    /**
+     * @inheritDoc
+     */
+    public function write($path, $contents, Config $config){}
+
+    /**
+     * @inheritDoc
+     */
+    public function writeStream($path, $resource, Config $config){}
+
+    /**
+     * @inheritDoc
+     */
+    public function update($path, $contents, Config $config){}
+
+    /**
+     * @inheritDoc
+     */
+    public function updateStream($path, $resource, Config $config){}
+
+    /**
+     * @inheritDoc
+     */
+    public function rename($path, $newpath){}
+
+    /**
+     * @inheritDoc
+     */
+    public function copy($path, $newpath){}
+
+    /**
+     * @inheritDoc
+     */
+    public function delete($path){}
+
+    /**
+     * @inheritDoc
+     */
+    public function deleteDir($dirname){}
+
+    /**
+     * @inheritDoc
+     */
+    public function createDir($dirname, Config $config){}
+
+    /**
+     * @inheritDoc
+     */
+    public function setVisibility($path, $visibility){}
+
+    /**
+     * @inheritDoc
+     */
+    public function isConnected(){}
+
+    /**
+     * @inheritDoc
+     */
+    public function has($path){}
+
+    /**
+     * @inheritDoc
+     */
+    public function read($path){}
+
+    /**
+     * @inheritDoc
+     */
+    public function readStream($path){}
+
+    /**
+     * @inheritDoc
+     */
+    public function listContents($directory = '', $recursive = false){}
+
+    /**
+     * @inheritDoc
+     */
+    public function getMetadata($path){}
+
+    /**
+     * @inheritDoc
+     */
+    public function getSize($path){}
+
+    /**
+     * @inheritDoc
+     */
+    public function getMimetype($path){}
+
+    /**
+     * @inheritDoc
+     */
+    public function getTimestamp($path){}
+
+    /**
+     * @inheritDoc
+     */
+    public function getVisibility($path){}
 }
