@@ -24,7 +24,7 @@
   },
   "autoload": {
     "psr-4": {
-      "Knik\\Flysystem\\Gameap\\": "src/"
+      "Longriders\\Flysystem\\Gameap\\": "src/"
     }
   }
 }
