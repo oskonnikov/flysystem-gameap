@@ -1,26 +1,30 @@
 {
-    "name": "knik/flysystem-gameap",
-    "description": "Flysystem Adapter for GameAP Daemon File Server",
-    "type": "library",
-    "license": "MIT",
-    "authors": [
-        {
-            "name": "Nikita Kuznetsov",
-            "email": "nikita.hldm@gmail.com"
-        }
-    ],
-    "require": {
-        "php": ">=5.6.0",
-        "league/flysystem": "~1.0",
-        "knik/gameap-daemon-client": "*"
+  "name": "longriders/flysystem-gameap",
+  "description": "Flysystem Adapter for GameAP Daemon File Server",
+  "type": "library",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Nikita Kuznetsov",
+      "email": "nikita.hldm@gmail.com"
     },
-    "require-dev": {
-        "mockery/mockery": "0.9.*",
-        "phpunit/phpunit": "^5.7.25"
-    },
-    "autoload": {
-        "psr-4": {
-            "Knik\\Flysystem\\Gameap\\": "src/"
-        }
+    {
+      "name": "Oleg Skonnikov",
+      "email": "devopwr@gmail.com"
     }
+  ],
+  "require": {
+    "php": "^8.2",
+    "league/flysystem": "^3.30",
+    "knik/gameap-daemon-client": "*"
+  },
+  "require-dev": {
+    "mockery/mockery": "0.9.*",
+    "phpunit/phpunit": "^5.7.25"
+  },
+  "autoload": {
+    "psr-4": {
+      "Knik\\Flysystem\\Gameap\\": "src/"
+    }
+  }
 }

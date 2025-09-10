@@ -10,13 +10,13 @@ This adapter uses [gameap-daemon-client](https://github.com/et-nik/gameap-daemon
 ## Installation
 
 ```bash
-composer require knik/flysystem-gameap
+composer require longriders/flysystem-gameap
 ```
 
 ## Usage
 
 ```php
-use Knik\Flysystem\Gameap\GameapAdapter;
+use Longriders\Flysystem\Gameap\GameapAdapter;
 use League\Flysystem\Filesystem;
 
 $adapter = new GameapAdapter([

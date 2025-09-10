@@ -1,6 +1,6 @@
 <?php
 
-namespace Knik\Flysystem\Gameap;
+namespace Longriders\Flysystem\Gameap;
 
 use League\Flysystem\Adapter\AbstractAdapter;
 use League\Flysystem\SafeStorage;

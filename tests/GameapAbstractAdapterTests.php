@@ -1,16 +1,16 @@
 <?php
 
-use Knik\Flysystem\Gameap\GameapAbstractAdapter;
+use Longriders\Flysystem\Gameap\GameapAbstractAdapter;
 use Knik\Gameap\GdaemonFiles;
 use League\Flysystem\SafeStorage;
 use PHPUnit\Framework\TestCase;
-use Knik\Flysystem\Gameap\GameapAdapter;
+use Longriders\Flysystem\Gameap\GameapAdapter;
 use League\Flysystem\Filesystem;
 use League\Flysystem\FilesystemInterface;
 use League\Flysystem\Config;
 
 /**
- * @covers Knik\Flysystem\Gameap\GameapAdapter<extended>
+ * @covers Longriders\Flysystem\Gameap\GameapAdapter<extended>
  */
 class GameapAbstractAdapterTests extends TestCase
 {

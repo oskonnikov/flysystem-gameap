@@ -1,6 +1,6 @@
 <?php
 
-namespace Knik\Flysystem\Gameap;
+namespace Longriders\Flysystem\Gameap;
 
 use League\Flysystem\Config;
 use League\Flysystem\Util;
